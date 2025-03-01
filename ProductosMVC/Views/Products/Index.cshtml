@@ -1,0 +1,109 @@
+@model IEnumerable<ProductosMVC.Models.Product>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <div class="row mb-4">
+        <div class="col-6">
+            <div class="input-group">
+                <input type="text" id="productIdInput" class="form-control" placeholder="Enter Product ID" aria-label="Enter Product ID" aria-describedby="product-id">
+                <div class="input-group-append">
+                    <button id="searchButton" class="btn btn-outline-primary" type="button">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .TrStyles {
+            padding: 20px;
+            width: 100px; 
+        }
+
+        tr.center-row td {
+            text-align: center;
+        }
+
+    </style>
+
+    <table class="table table-striped" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr class="center-row">
+                <th>Title</th>
+                <th>Desc</th>
+                <th>Price</th>
+                <th>Tax</th>
+                <th>Price+Tax</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody">
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Title</td>
+                    <td>@product.Description?.Substring(0, Math.Min(100, product.Description.Length))...</td>
+                    <td class="TrStyles">@product.Price.ToString("C")</td>
+                    <td class="TrStyles">@product.Tax.ToString("C")</td>
+                    <td>@product.PriceWithTaxes.ToString("C")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary">
+                            Details
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            No hay productos disponibles en este momento.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchButton').click(function () {
+                var productId = $('#productIdInput').val();
+                var url = productId ? `/api/ProductsApi/${productId}` : '/api/ProductsApi';
+
+                $.get(url, function (data) {
+                    var tableBody = $('#productTableBody');
+                    tableBody.empty();
+
+                    if (Array.isArray(data)) {
+                        data.forEach(function (product) {
+                            tableBody.append(createProductRow(product));
+                        });
+                    } else if (data) {
+                        tableBody.append(createProductRow(data));
+                    } else {
+                        // If no product is found, ensure the table is empty
+                        tableBody.append('<tr><td colspan="6" class="text-center">No products found.</td></tr>');
+                    }
+                }).fail(function() {
+                    // Handle the case where the product is not found
+                    $('#productTableBody').empty().append('<tr><td colspan="6" class="text-center">No products found.</td></tr>');
+                });
+            });
+
+            function createProductRow(product) {
+                return `<tr>
+                    <td>${product.title}</td>
+                    <td>${product.description.substring(0, 100)}...</td>
+                    <td>${product.price.toFixed(2)}</td>
+                    <td>${product.tax.toFixed(2)}</td>
+                    <td>${product.priceWithTaxes.toFixed(2)}</td>
+                    <td><a href="/Products/Details/${product.id}" class="btn btn-outline-primary">Details</a></td>
+                </tr>`;
+            }
+        });
+    </script>
+}

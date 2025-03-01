@@ -1,0 +1,66 @@
+/* _content/ProductosMVC/Views/Shared/_Layout.cshtml.rz.scp.css */
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand[b-tgmltxtgbj] {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a[b-tgmltxtgbj] {
+  color: #0077cc;
+}
+
+.btn-primary[b-tgmltxtgbj] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active[b-tgmltxtgbj], .nav-pills .show > .nav-link[b-tgmltxtgbj] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top[b-tgmltxtgbj] {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom[b-tgmltxtgbj] {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow[b-tgmltxtgbj] {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy[b-tgmltxtgbj] {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer[b-tgmltxtgbj] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+.navbar-brand img[b-tgmltxtgbj] {
+  transition: transform 0.3s ease;
+  width: 400px;
+}
+
+.navbar-brand img:hover[b-tgmltxtgbj] {
+  transform: scale(1.1);
+}
+
+.nav-link[b-tgmltxtgbj] {
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover[b-tgmltxtgbj] {
+  color: #007bff;
+}

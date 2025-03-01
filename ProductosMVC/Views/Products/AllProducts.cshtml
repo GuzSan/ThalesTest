@@ -1,0 +1,48 @@
+@model IEnumerable<ProductosMVC.Models.Product>
+
+@{
+    ViewData["Title"] = "All Products Grid";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    @if (product.Images != null && product.Images.Any())
+                    {
+                        <img src="@product.Images[0]" class="card-img-top" alt="@product.Title">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Title</h5>
+                        <p class="card-text">@product.Description?.Substring(0, Math.Min(100, product.Description.Length))...</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 text-primary mb-0">@product.PriceWithTaxes.ToString("C")</span>&nbsp;<small>(inc. taxes)</small>
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary">
+                                Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            No hay productos disponibles en este momento.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            
+        });
+    </script>
+}
